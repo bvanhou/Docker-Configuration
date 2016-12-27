@@ -15,14 +15,14 @@ services:
       - /data/certs:/etc/nginx/certs
 
 # Jenkins Master - Internal
-  jenkins.stopias.com:
+  jenkins.company.com:
     restart: always
     container_name: jenkins-master
     image: jenkins
     volumes_from:
       - "jenkins-data"
     environment:
-      - "VIRTUAL_HOST=jenkins.stopias.com"
+      - "VIRTUAL_HOST=jenkins.company.com"
       - "JAVA_OPTS=-Xmx8192m"
       - "VIRTUAL_PORT=8080"
 
@@ -43,7 +43,7 @@ services:
 #       VIRTUAL_HOST: gitlab-2.stopias.com
 #       VIRTUAL_PORT: 80
 #       GITLAB_OMNIBUS_CONFIG: |
-#          external_url 'http://gitlab-2.stopias.com'
+#          external_url 'http://gitlab-2.company.com'
 #          gitlab_rails['backup_keep_time'] = 604800,
 #          gitlab_rails['backup_upload_connection'] = {
 #                'provider' => 'AWS',
@@ -66,7 +66,7 @@ services:
     container_name: mysql
     environment:
        MYSQL_ROOT_PASSWORD: P1w!k2016
-       VIRTUAL_HOST: mysql.stopias.com
+       VIRTUAL_HOST: mysql.company.com
        VIRTUAL_PORT: 3306
     volumes:
        - /tmp/piwik/mysqldata:/var/lib/mysql
@@ -77,4 +77,4 @@ services:
     links:
       - piwik_db:db
     environment:
-      - "VIRTUAL_HOST=piwik.stopias.com"
+      - "VIRTUAL_HOST=piwik.company.com"
