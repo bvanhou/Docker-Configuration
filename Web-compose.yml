@@ -18,4 +18,4 @@ services:
     restart: always
     image: business.company.com
     environment:
-      - "VIRTUAL_HOST=qa-business.company.com"
+      - "VIRTUAL_HOST=business.company.com"
