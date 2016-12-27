@@ -1,0 +1,80 @@
+version: '2'
+services:
+
+# Nginx Configurations
+  nginx-proxy:
+    restart: always
+    container_name: nginx-proxy
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /data/nginx/vhost.d:/etc/nginx/vhost.d:ro
+      - /data/certs:/etc/nginx/certs
+
+# Jenkins Master - Internal
+  jenkins.stopias.com:
+    restart: always
+    container_name: jenkins-master
+    image: jenkins
+    volumes_from:
+      - "jenkins-data"
+    environment:
+      - "VIRTUAL_HOST=jenkins.stopias.com"
+      - "JAVA_OPTS=-Xmx8192m"
+      - "VIRTUAL_PORT=8080"
+
+# Jenkins - Internal
+  jenkins-data:
+    restart: always
+    container_name: jenkins-data
+    image: thijsqa/jenkins-data
+    volumes:
+       - /etc/docker/ssl:/usr/docker/certs
+       - /var/run/docker.sock:/tmp/docker.sock:ro
+
+# Gitlab - Community Edition
+#   gitlab:
+#    image: 'socialtopias/gitlab-ce:8.7.0-ce.0'
+#    restart: always
+#    environment:
+#       VIRTUAL_HOST: gitlab-2.stopias.com
+#       VIRTUAL_PORT: 80
+#       GITLAB_OMNIBUS_CONFIG: |
+#          external_url 'http://gitlab-2.stopias.com'
+#          gitlab_rails['backup_keep_time'] = 604800,
+#          gitlab_rails['backup_upload_connection'] = {
+#                'provider' => 'AWS',
+#                'region' => 'us-west-2',
+#                'aws_access_key_id' => 'AKIAJH3Q5FJXX62DGDFQ',
+#                'aws_secret_access_key' => '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',
+#                'use_iam_profile' => 'true'
+#          }
+#          gitlab_rails['backup_upload_remote_directory'] = 'hopspot-backup'
+#    volumes:
+#      - '/data/gitlab/conf:/etc/gitlab'
+#      - '/data/gitlab/logs:/var/log/gitlab'
+#      - '/data/gitlab/data:/var/opt/gitlab'
+
+
+
+# Piwik - Mobile Analytivs
+  piwik_db:
+    image: mysql
+    container_name: mysql
+    environment:
+       MYSQL_ROOT_PASSWORD: P1w!k2016
+       VIRTUAL_HOST: mysql.stopias.com
+       VIRTUAL_PORT: 3306
+    volumes:
+       - /tmp/piwik/mysqldata:/var/lib/mysql
+       - /tmp/piwik/mysqlbackup:/var/mysql-backup
+  piwik:
+    image: cbeer/piwik
+    container_name: piwik
+    links:
+      - piwik_db:db
+    environment:
+      - "VIRTUAL_HOST=piwik.stopias.com"
