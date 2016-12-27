@@ -1,0 +1,21 @@
+version: '2'
+services:
+  nginx-proxy:
+    restart: always
+    container_name: nginx
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /data/nginx/vhost.d:/etc/nginx/vhost.d:ro
+      - /data/certs:/etc/nginx/certs
+
+# Business Website
+  business.company.com:
+    container_name: business.company.com
+    restart: always
+    image: business.company.com
+    environment:
+      - "VIRTUAL_HOST=qa-business.company.com"
