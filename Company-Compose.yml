@@ -37,13 +37,13 @@ services:
 
 # Gitlab - Community Edition
 #   gitlab:
-#    image: 'socialtopias/gitlab-ce:8.7.0-ce.0'
+#    image: 'gitlab-ce:8.7.0-ce.0'
 #    restart: always
 #    environment:
-#       VIRTUAL_HOST: gitlab-2.stopias.com
+#       VIRTUAL_HOST: gitlab.company.com
 #       VIRTUAL_PORT: 80
 #       GITLAB_OMNIBUS_CONFIG: |
-#          external_url 'http://gitlab-2.company.com'
+#          external_url 'http://gitlab.company.com'
 #          gitlab_rails['backup_keep_time'] = 604800,
 #          gitlab_rails['backup_upload_connection'] = {
 #                'provider' => 'AWS',
