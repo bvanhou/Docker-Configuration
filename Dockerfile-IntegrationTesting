@@ -1,0 +1,36 @@
+#---------------------------------------------------------------------
+# Dockerfile suggestion to intergrate running Tests on the image.
+# Example pulled from : http://blog.terranillius.com/post/docker_testing/
+# After this they pull the production image from the image history if all tests pass.
+#---------------------------------------------------------------------
+
+
+FROM "<base image="">":"<version>"
+
+WORKDIR "<path>"
+
+# install packages required to run app
+RUN apt-get update && apt-get install -y \
+    "<app runtime=""> and <dependencies>" \  # add app runtime and required packages
+    && rm -rf /var/lib/apt/lists/*
+
+# copy app files
+COPY app app
+COPY run.sh run.sh
+
+# main app command
+CMD ["run.sh", "<app arguments="">"]
+
+#--- add tests after this line ---
+
+# install packages required to run tests   
+RUN apt-get update && apt-get install -y \
+           "<test tools=""> and <dependencies>"    \     # add testing tools and required packages
+           && rm -rf /var/lib/apt/lists/*
+
+COPY tests tests
+COPY test.sh test.sh
+VOLUME "/var/tests/results"
+
+# main test command
+CMD ["test.sh", "<test arguments="">"]
