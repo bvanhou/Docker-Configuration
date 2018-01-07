@@ -1,6 +1,7 @@
 # Docker-Configuration
 ### Installation within CentOS
 ###### ==========================
+###### Perform as Root
 ### Basic Directory Tree Schema 
 ###### /data
 ###### ../certs
@@ -9,7 +10,7 @@
 ###### ../../vhost.d
 
 ```
-sudo yum -y update && sudo yum install -y vim && sudo yum install -y git
+yum -y update && sudo yum install -y vim && sudo yum install -y git
 ```
 
 ```
@@ -23,33 +24,28 @@ gpgkey=https://yum.dockerproject.org/gpg
 EOF
 ```
 ```
-sudo yum install -y docker-engine
-
-sudo systemctl enable docker.service
-
-sudo systemctl start docker
-
-sudo yum install -y epel-release
-
-sudo yum -y install python-pip
-
-sudo pip install docker-compose
+yum install -y docker-engine
+systemctl enable docker.service
+systemctl start docker
+yum install -y epel-release
+yum -y install python-pip
+pip install docker-compose
 ```
 
 ### Install Docker 
 ###### =====================================
 Update the packages on your instance
 ```
-[ec2-user ~]$ sudo yum update -y
+yum update -y
 Install Docker
 
-[ec2-user ~]$ sudo yum install docker -y
+yum install docker -y
 Start the Docker Service
 
-[ec2-user ~]$ sudo service docker start
+service docker start
 Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
 
-[ec2-user ~]$ sudo usermod -a -G docker ec2-user
+usermod -a -G docker ec2-user
 ```
 
 
