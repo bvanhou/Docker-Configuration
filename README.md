@@ -1,13 +1,18 @@
 # Docker-Configuration
 ### Installation within CentOS
 ###### ==========================
-###### Perform as Root
-### Basic Directory Tree Schema 
-###### /data
-###### ../certs
-###### ../sites
-###### ../nginx/
-###### ../../vhost.d
+##### Basic Directory Tree Schema 
+```
+/data
+|-- certs
+|-- sites
+|   |-- dev_snmp6
+|   |-- netfilter
+|-- ngnix
+|   |-- vhost.d
+```
+
+###### To Utilize scripts perform as root
 
 ```
 yum -y update && sudo yum install -y vim && sudo yum install -y git
