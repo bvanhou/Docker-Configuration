@@ -36,15 +36,16 @@ pip install docker-compose
 ###### =====================================
 Update the packages on your instance
 ```
+Update Yum Package Manager
 yum update -y
+
 Install Docker
-
 yum install docker -y
+
 Start the Docker Service
-
 service docker start
-Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
 
+Add the ec2-user to the docker group so you can execute Docker commands without using sudo.
 usermod -a -G docker ec2-user
 ```
 
