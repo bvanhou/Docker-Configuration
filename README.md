@@ -57,10 +57,16 @@ usermod -a -G docker ec2-user
 
 
 
-### End Docker-Compose and Docker Clean-up
+### End Docker-Compose and Docker Clean-up 
 ###### ======================================
 ```
 sudo docker-compose stop && sudo docker-compose rm -f
 docker rmi $(docker images -q -f dangling=true)
 docker rm -v $(docker ps -a -q -f status=exited)
+```
+
+### Start Docker-Compose and Docker build image
+###### ======================================
+```
+docker-compose build && docker-compose up -d
 ```
