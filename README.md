@@ -36,6 +36,16 @@ yum install -y epel-release
 yum -y install python-pip
 pip install docker-compose
 ```
+### Configure Firewall Rules
+###### =====================================
+```
+firewall-cmd --permanent --zone=public --add-port=2376/tcp
+firewall-cmd --reload
+ 
+# check rules
+firewall-cmd --list-all
+```
+
 
 ### Install Docker 
 ###### =====================================
