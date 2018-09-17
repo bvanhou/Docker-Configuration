@@ -106,21 +106,11 @@ docker rm $(docker ps -aq)
 docker rmi $(docker images -q)
 ```
 
-### Resolve Issue: Cannot have both the docker-py and docker python modules installed
+### Resolve Ansible Issue: Cannot have both the docker-py and docker python modules installed
 ###### ======================================
-```
-pip2 install docker
-pip2 install docker-py
-pip3 install docker-py
-pip install 'docker-compose>=1.7.0'
-pip install 'docker-py>=1.7.0'
-pip uninstall docker
-pip uninstall docker-py
-pip uninstall docker-compose
-pip install docker-compose==1.9.0
-pip uninstall docker
-pip2 uninstall docker
-pip3 uninstall docker
-pip install --ignore-installed docker-py
-pip2 install --ignore-installed docker-py
-```
+First uninstall everything docker related in the virtualenv for Ansible.
+```pip uninstall docker docker-py docker-compose```
+And then install the docker-compose module, which will install the docker module as well as a dependency.
+```pip install docker-compose```
+
+The Ansible docker module will try to import docker, which will also succeed with the docker module, and as such not provide an error with the misleading instruction to install docker-py.
